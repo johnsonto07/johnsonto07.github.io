@@ -250,3 +250,22 @@ main{padding:42px 0 80px}
   font-size:13px;
 }
 .small{font-size:13px;color:var(--muted)}
+/* Home page stronger project layout */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 800px) {
+  .home-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.home-grid .card {
+  min-height: 160px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
