@@ -1,27 +1,101 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
 <head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Johnson To</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body {
-      font-family: Arial;
-      max-width: 700px;
-      margin: 60px auto;
-      padding: 20px;
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
+  <div class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">Johnson To</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="photos.html">Photos</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch to dark mode">🌙</button>
+      </div>
+    </div>
+  </div>
 
-<h1>Johnson To</h1>
-<p>Chemical Engineering Student at UC Berkeley</p>
+  <main class="container">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <h1>Johnson To</h1>
+          <p class="subtitle">Chemical Engineering student at UC Berkeley</p>
+          <p class="lead">
+            Interested in energy systems, process design, and applied AI. Building a strong foundation through coursework,
+            leadership, and hands-on experiences.
+          </p>
+          <div class="cta-row">
+            <a class="btn primary" href="projects.html">View Projects →</a>
+            <a class="btn" href="contact.html">Contact</a>
+          </div>
 
-<h2>About Me</h2>
-<p>I’m interested in engineering, AI, and building cool projects.</p>
+          <div class="badges">
+            <span class="badge"><strong>Focus</strong> Systems + analysis</span>
+            <span class="badge"><strong>Tools</strong> Excel • Adobe • Canva</span>
+            <span class="badge"><strong>Location</strong> Berkeley, CA</span>
+          </div>
+        </div>
 
-<h2>Contact</h2>
-<p>Email: your@email.com</p>
+        <div class="panel">
+          <div class="kicker">Quick highlights</div>
+          <div class="section" style="margin-top:12px">
+            <div class="small">• 400+ hours of 1:1 tutoring (algebra & trig)</div>
+            <div class="small">• AIChE media committee (graphics + engagement)</div>
+            <div class="small">• Energy systems presentations + process project</div>
+            <div class="small">• Managed budgets & led 100+ member orgs</div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <section class="section">
+      <h2>What I’m working on</h2>
+      <p class="kicker">Projects are coming soon — I’m actively building and will publish them here.</p>
+
+      <div class="grid" style="margin-top:14px">
+        <div class="card">
+          <h3>Project Portfolio (in progress)</h3>
+          <p>Building out a set of engineering + AI projects suitable for internships and research.</p>
+          <div class="tags">
+            <span class="tag">Portfolio</span>
+            <span class="tag">Applied AI</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Technical Writing & Communication</h3>
+          <p>Turning class/lab learning into clear writeups and visuals that others can understand.</p>
+          <div class="tags">
+            <span class="tag">Communication</span>
+            <span class="tag">Design</span>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Professional Growth</h3>
+          <p>Building a structured, professional online presence and staying consistent over time.</p>
+          <div class="tags">
+            <span class="tag">Career</span>
+            <span class="tag">Consistency</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      © <span id="y"></span> Johnson To • Built on GitHub Pages
+    </div>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
