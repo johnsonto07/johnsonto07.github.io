@@ -269,3 +269,13 @@ main{padding:42px 0 80px}
   flex-direction: column;
   justify-content: space-between;
 }
+/* Force 2-column grid when desired */
+.grid-2{
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 800px){
+  .grid-2{
+    grid-template-columns: 1fr;
+  }
+}
