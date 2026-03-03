@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About • Johnson To</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">Johnson To</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="photos.html">Photos</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch to dark mode">🌙</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="section" style="margin-top:18px">
+      <h2>About</h2>
+      <p class="kicker">A quick overview of who I am and what I’m into.</p>
+
+      <div class="panel" style="margin-top:14px">
+        <p style="margin:0">
+          I’m a Chemical Engineering student at UC Berkeley focused on building strong fundamentals in math, chemistry,
+          and engineering problem-solving. I’m especially interested in energy systems, process design, and using data/AI
+          tools to make technical work more effective.
+        </p>
+        <div style="height:12px"></div>
+        <p style="margin:0" class="small">
+          Outside of academics, I like golfing, keeping up with sports, collecting Smiskis, going to the beach,
+          playing video games, and trying new food spots.
+        </p>
+      </div>
+    </section>
+
+    <div class="footer">
+      © <span id="y"></span> Johnson To
+    </div>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
