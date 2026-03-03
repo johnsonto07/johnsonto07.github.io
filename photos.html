@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Photos • Johnson To</title>
+  <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+  <div class="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">Johnson To</a>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="projects.html">Projects</a>
+        <a href="experience.html">Experience</a>
+        <a href="photos.html">Photos</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch to dark mode">🌙</button>
+      </div>
+    </div>
+  </div>
+
+  <main class="container">
+    <section class="section" style="margin-top:18px">
+      <h2>Photos</h2>
+      <p class="kicker">Add your photos to <strong>assets/img</strong>, then update the file names below.</p>
+
+      <div class="photo-grid" style="margin-top:14px">
+        <!-- Replace placeholders with real images later -->
+        <div class="photo">Add photo 1</div>
+        <div class="photo">Add photo 2</div>
+        <div class="photo">Add photo 3</div>
+        <div class="photo">Add photo 4</div>
+        <div class="photo">Add photo 5</div>
+        <div class="photo">Add photo 6</div>
+      </div>
+
+      <div class="panel" style="margin-top:16px">
+        <div class="small"><strong>How to add photos:</strong></div>
+        <div class="small">1) Upload images to <code>assets/img</code> (e.g., <code>beach.jpg</code>)</div>
+        <div class="small">2) Replace a placeholder box with:</div>
+        <div class="small"><code>&lt;div class="photo"&gt;&lt;img src="assets/img/beach.jpg" alt="Beach" /&gt;&lt;/div&gt;</code></div>
+      </div>
+    </section>
+
+    <div class="footer">
+      © <span id="y"></span> Johnson To
+    </div>
+  </main>
+
+  <script src="assets/js/main.js"></script>
+  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body>
+</html>
