@@ -296,3 +296,43 @@ main{padding:42px 0 80px}
     grid-template-columns: minmax(0, 1fr);
   }
 }
+.about-layout{
+  display:grid;
+  grid-template-columns: 380px 1fr;
+  gap: 28px;
+  align-items: start;
+}
+
+.about-photo-card{
+  background: transparent;
+}
+
+.about-photo{
+  width: 100%;
+  max-width: 380px;
+  height: 460px;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.about-text-card{
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 24px;
+}
+
+@media (max-width: 900px){
+  .about-layout{
+    grid-template-columns: 1fr;
+  }
+
+  .about-photo{
+    max-width: 100%;
+    height: auto;
+  }
+}
