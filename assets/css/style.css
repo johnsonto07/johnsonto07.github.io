@@ -297,10 +297,10 @@ main{padding:42px 0 80px}
   }
 }
 .about-layout{
-  display:grid;
-  grid-template-columns: 380px 1fr;
-  gap: 28px;
-  align-items: start;
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 24px;
+  align-items: center;
 }
 
 .about-photo-card{
@@ -309,13 +309,11 @@ main{padding:42px 0 80px}
 
 .about-photo{
   width: 100%;
-  max-width: 380px;
-  height: 460px;
+  max-width: 240px;
+  height: 300px;
   object-fit: cover;
-  display: block;
-  border-radius: 20px;
+  border-radius: 16px;
   border: 1px solid var(--border);
-  box-shadow: var(--shadow);
 }
 
 .about-text-card{
