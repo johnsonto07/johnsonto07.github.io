@@ -30,6 +30,29 @@
     if (a.getAttribute('href') === page) a.setAttribute('aria-current', 'page');
   });
 
+  document.querySelectorAll('[data-carousel]').forEach(function (c) {
+    var track = c.querySelector('.track');
+    var btns = c.querySelectorAll('.arrow');
+    function step() {
+      var card = track.querySelector('.pcard');
+      var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
+      return card ? card.getBoundingClientRect().width + gap : track.clientWidth;
+    }
+    function update() {
+      var max = track.scrollWidth - track.clientWidth - 2;
+      btns[0].disabled = track.scrollLeft <= 2;
+      btns[1].disabled = track.scrollLeft >= max;
+    }
+    btns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        track.scrollBy({ left: step() * Number(b.getAttribute('data-dir')) });
+      });
+    });
+    track.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    update();
+  });
+
   var y = document.getElementById('y');
   if (y) y.textContent = new Date().getFullYear();
 })();
