@@ -30,27 +30,70 @@
     if (a.getAttribute('href') === page) a.setAttribute('aria-current', 'page');
   });
 
+  // Project carousel: loops forever and advances on its own.
   document.querySelectorAll('[data-carousel]').forEach(function (c) {
     var track = c.querySelector('.track');
     var btns = c.querySelectorAll('.arrow');
+    var real = Array.prototype.slice.call(track.children);
+    if (!real.length) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function clone(el) {
+      var k = el.cloneNode(true);
+      k.setAttribute('aria-hidden', 'true');
+      k.querySelectorAll('a,button').forEach(function (x) { x.setAttribute('tabindex', '-1'); });
+      return k;
+    }
+    real.forEach(function (el) { track.appendChild(clone(el)); });
+    real.slice().reverse().forEach(function (el) { track.insertBefore(clone(el), track.firstChild); });
+
+    function setWidth() { return track.children[real.length * 2].offsetLeft - track.children[real.length].offsetLeft; }
     function step() {
-      var card = track.querySelector('.pcard');
       var gap = parseFloat(getComputedStyle(track).columnGap) || 0;
-      return card ? card.getBoundingClientRect().width + gap : track.clientWidth;
+      return real[0].getBoundingClientRect().width + gap;
     }
-    function update() {
-      var max = track.scrollWidth - track.clientWidth - 2;
-      btns[0].disabled = track.scrollLeft <= 2;
-      btns[1].disabled = track.scrollLeft >= max;
+    function jump(to) {
+      track.style.scrollBehavior = 'auto';
+      track.style.scrollSnapType = 'none';
+      track.scrollLeft = to;
+      track.offsetHeight;
+      track.style.scrollSnapType = '';
+      track.style.scrollBehavior = '';
     }
+    function normalize() {
+      var w = setWidth();
+      if (track.scrollLeft < w - 2) jump(track.scrollLeft + w);
+      else if (track.scrollLeft >= 2 * w - 2) jump(track.scrollLeft - w);
+    }
+    jump(setWidth());
+
+    var t;
+    track.addEventListener('scroll', function () { clearTimeout(t); t = setTimeout(normalize, 140); }, { passive: true });
+    window.addEventListener('resize', function () { jump(setWidth() + (track.scrollLeft % setWidth())); normalize(); });
+
+    function go(dir) { track.scrollBy({ left: step() * dir, behavior: reduce ? 'auto' : 'smooth' }); }
     btns.forEach(function (b) {
-      b.addEventListener('click', function () {
-        track.scrollBy({ left: step() * Number(b.getAttribute('data-dir')) });
-      });
+      b.addEventListener('click', function () { go(Number(b.getAttribute('data-dir'))); pauseFor(8000); });
     });
-    track.addEventListener('scroll', update, { passive: true });
-    window.addEventListener('resize', update);
-    update();
+
+    // Auto-advance every 4 s; pause while hovered, focused, touched, or off screen.
+    var hover = false, focus = false, held = 0, visible = true;
+    function pauseFor(ms) { held = Date.now() + ms; }
+    c.addEventListener('mouseenter', function () { hover = true; });
+    c.addEventListener('mouseleave', function () { hover = false; });
+    c.addEventListener('focusin', function () { focus = true; });
+    c.addEventListener('focusout', function () { focus = false; });
+    track.addEventListener('pointerdown', function () { pauseFor(8000); });
+    track.addEventListener('wheel', function () { pauseFor(8000); }, { passive: true });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(function (e) { visible = e[0].isIntersecting; }).observe(c);
+    }
+    if (!reduce) {
+      setInterval(function () {
+        if (hover || focus || !visible || document.hidden || Date.now() < held) return;
+        go(1);
+      }, 4000);
+    }
   });
 
   var y = document.getElementById('y');
