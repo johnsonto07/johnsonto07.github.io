@@ -1,61 +1,85 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>About • Johnson To</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About | Johnson To</title>
+  <meta name="description" content="About Johnson To, chemical engineering student at UC Berkeley.">
+  <meta property="og:title" content="About | Johnson To">
+  <meta property="og:description" content="About Johnson To, chemical engineering student at UC Berkeley.">
+  <meta property="og:image" content="https://johnsonto07.github.io/assets/img/headshot.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6b4f'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='700' text-anchor='middle' fill='white'%3EJT%3C/text%3E%3C/svg%3E">
+  <script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="nav">
-    <div class="container nav-inner">
+  <header class="site-nav">
+    <div class="wrap">
       <a class="brand" href="index.html">Johnson To</a>
-      <div class="nav-links">
+      <nav class="nav-links" aria-label="Main">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
         <a href="experience.html">Experience</a>
-        <a href="photos.html">Photos</a>
-        <a href="contact.html">Contact</a>
-      </div>
-      <div class="nav-actions">
-        <button class="icon-btn" data-theme-toggle aria-label="Switch to dark mode">🌙</button>
-      </div>
+        <a href="about.html">About</a>
+        <a href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank" rel="noopener">Resume</a>
+        <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme"></button>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <main class="container">
-    <section class="section" style="margin-top:18px">
-      <h2>About</h2>
-      <p class="kicker">A quick overview of who I am and what I’m into.</p>
+  <main>
+    <section class="page-head">
+      <div class="wrap">
+        <h1>About</h1>
+      </div>
+    </section>
 
-      <div class="about-layout" style="margin-top:18px;">
-        <div class="about-photo-card">
-          <img src="assets/img/johnson%20to.jpg" alt="Johnson To" class="about-photo">
-        </div>
-
-        <div class="about-text-card">
-          <h3 style="margin-top:0; margin-bottom:12px;">Hi, I’m Johnson.</h3>
-          <p style="margin-top:0;">
-            I’m a Chemical Engineering student at UC Berkeley focused on building strong fundamentals in math, chemistry,
-            and engineering problem-solving. I’m especially interested in energy systems, process design, and using data
-            and AI tools to make technical work more effective.
-          </p>
-
-          <p style="margin-bottom:0;">
-            Outside of academics, I like golfing, keeping up with sports, collecting Smiskis, going to the beach,
-            playing video games, and trying new food spots.
-          </p>
+    <section class="section" style="border-top:0;padding-top:0">
+      <div class="wrap about">
+        <div class="portrait"><img src="assets/img/headshot.jpg" alt="Portrait of Johnson To"></div>
+        <div class="about-text">
+          <p>Hi, I'm Johnson. I study chemical engineering at UC Berkeley and I'm most interested in energy systems, process design, and materials.</p>
+          <p>The work I enjoy most mixes lab results, data analysis, and hands-on building. That's what drew me to thin-film R&amp;D at Delphon and to side projects like the smart waste sorter.</p>
+          <p>Outside of school I golf, rock climb, go hiking and backpacking, and collect vinyl records.</p>
+          <div class="actions">
+            <a class="btn solid" href="mailto:johnson07@berkeley.edu">Email me</a>
+            <a class="btn" href="https://www.linkedin.com/in/johnsonto7/" target="_blank" rel="noopener">LinkedIn</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <div class="footer">
-      © <span id="y"></span> Johnson To
-    </div>
+    <section class="section" id="photos">
+      <div class="wrap">
+        <div class="section-head"><h2>Photos</h2></div>
+        <div class="photos">
+          <figure><img src="assets/img/photos/berkeley-skyline.jpg" alt="UC Berkeley campus and the bay" loading="lazy"><figcaption>UC Berkeley campus and the bay</figcaption></figure>
+          <figure><img src="assets/img/photos/sather-tower.jpg" alt="Sather Tower" loading="lazy"><figcaption>Sather Tower</figcaption></figure>
+          <figure><img src="assets/img/photos/beach-sunset.jpg" alt="Sunset at the beach" loading="lazy"><figcaption>Sunset at the beach</figcaption></figure>
+          <figure><img src="assets/img/photos/pledge-class.jpg" alt="My pledge class" loading="lazy"><figcaption>My pledge class</figcaption></figure>
+          <figure><img src="assets/img/photos/birthday-dinner.jpg" alt="Birthday dinner with friends" loading="lazy"><figcaption>Birthday dinner with friends</figcaption></figure>
+          <figure><img src="assets/img/photos/family.jpg" alt="With my family at graduation" loading="lazy"><figcaption>With my family at graduation</figcaption></figure>
+        </div>
+      </div>
+    </section>
   </main>
 
+  <footer class="site-foot" id="contact">
+    <div class="wrap">
+      <h2>Get in touch</h2>
+      <p>I'm open to internship and research opportunities in chemical engineering. Email is the best way to reach me.</p>
+      <div class="actions">
+        <a class="btn solid" href="mailto:johnson07@berkeley.edu">johnson07@berkeley.edu</a>
+        <a class="btn" href="https://www.linkedin.com/in/johnsonto7/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+      </div>
+      <p class="fine">&copy; <span id="y">2026</span> Johnson To</p>
+    </div>
+  </footer>
+
   <script src="assets/js/main.js"></script>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>

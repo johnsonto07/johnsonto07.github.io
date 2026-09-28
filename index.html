@@ -1,85 +1,118 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Johnson To</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Johnson To | Chemical Engineering, UC Berkeley</title>
+  <meta name="description" content="Chemical engineering student at UC Berkeley. Projects, experience, and resume.">
+  <meta property="og:title" content="Johnson To | Chemical Engineering, UC Berkeley">
+  <meta property="og:description" content="Chemical engineering student at UC Berkeley. Projects, experience, and resume.">
+  <meta property="og:image" content="https://johnsonto07.github.io/assets/img/headshot.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6b4f'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='700' text-anchor='middle' fill='white'%3EJT%3C/text%3E%3C/svg%3E">
+  <script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="nav">
-    <div class="container nav-inner">
+  <header class="site-nav">
+    <div class="wrap">
       <a class="brand" href="index.html">Johnson To</a>
-      <div class="nav-links">
+      <nav class="nav-links" aria-label="Main">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
         <a href="experience.html">Experience</a>
-        <a href="photos.html">Photos</a>
-        <a href="contact.html">Contact</a>
-        <a href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank">Resume</a>
-      </div>
-      <div class="nav-actions">
-        <button class="icon-btn" data-theme-toggle aria-label="Switch to dark mode">🌙</button>
-      </div>
+        <a href="about.html">About</a>
+        <a href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank" rel="noopener">Resume</a>
+        <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme"></button>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <main class="container">
+  <main>
     <section class="hero">
-      <div class="hero-grid">
+      <div class="wrap">
         <div>
           <h1>Johnson To</h1>
-          <p class="subtitle">Chemical Engineering student at UC Berkeley</p>
-          <p class="lead">
-            Interested in energy systems, process design, and applied AI. Building a strong foundation through coursework,
-            leadership, and hands-on experiences.
-          </p>
-          <div class="cta-row">
-  <a class="btn primary" href="projects.html">View Projects →</a>
-  <a class="btn" href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank">Resume</a>
-</div>
-
-          <div class="badges">
-            <span class="badge"><strong>Focus</strong> Systems + analysis</span>
-            <span class="badge"><strong>Location</strong> Berkeley, CA</span>
+          <p class="intro">I study chemical engineering at UC Berkeley. This summer I was an R&amp;D engineering intern at Delphon Industries, working on high-temperature silicone films for electrostatic discharge protection.</p>
+          <p class="intro">Outside of class I build things, like a waste bin that sorts itself with computer vision and an electrolysis cell for measuring hydrogen yield.</p>
+          <div class="actions">
+            <a class="btn solid" href="projects.html">See my projects</a>
+            <a class="btn" href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+          </div>
+          <div class="facts">
+            <div><b>B.S. Chemical Engineering</b>UC Berkeley</div>
+            <div><b>Expected graduation</b>May 2028</div>
+            <div><b>Based in</b>Berkeley, CA</div>
           </div>
         </div>
-
-        </div>
+        <div class="portrait"><img src="assets/img/headshot.jpg" alt="Portrait of Johnson To in a suit on the UC Berkeley campus"></div>
       </div>
     </section>
 
     <section class="section">
-      <h2>What I’m working on</h2>
-      <p class="kicker">Projects are coming soon — I’m actively building and will publish them here.</p>
-
-      <div class="grid grid-2" style="margin-top:14px">
-        <div class="card">
-          <h3>Project Portfolio (in progress)</h3>
-          <p>Building out a set of engineering + AI projects suitable for internships and research.</p>
-          <div class="tags">
-            <span class="tag">Portfolio</span>
-            <span class="tag">Applied AI</span>
-          </div>
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Selected projects</h2>
+          <a class="text-link" href="projects.html">All projects</a>
         </div>
-        <div class="card">
-          <h3>Technical Writing & Communication</h3>
-          <p>Turning class/lab learning into clear writeups and visuals that others can understand.</p>
-          <div class="tags">
-            <span class="tag">Communication</span>
-            <span class="tag">Design</span>
+        <article class="project">
+          <div class="project-media "><img src="assets/img/projects/smart-waste-sorter.jpg" alt="The finished smart waste sorter: a wood and polycarbonate enclosure with two openings" loading="lazy"></div>
+          <div>
+            <h3>Smart Waste Sorting System</h3>
+            <div class="meta">Personal project, January to May 2026</div>
+            <p class="result">Up to 95% confidence classifying trash vs. recycling</p>
+          <div class="links">
+            <a class="text-link" href="https://johnsonto07.github.io/smart-trash-can-project/" target="_blank" rel="noopener">View project site</a>
           </div>
-        </div>
+          </div>
+        </article>
+        <article class="project">
+          <div class="project-media contain"><img src="assets/img/projects/hydrogen-efficiency-chart.jpg" alt="Scatter plot of Faradaic efficiency against cell voltage with a linear fit" loading="lazy"></div>
+          <div>
+            <h3>Hydrogen Electrolysis Optimization</h3>
+            <div class="meta">Personal project, January to May 2026</div>
+            <p class="result">Peak Faradaic efficiency of about 90% across 50+ trials</p>
+          <div class="links">
+            <a class="text-link" href="https://johnsonto07.github.io/hydrogen-electrolyzer-analysis/" target="_blank" rel="noopener">View project site</a>
+          </div>
+          </div>
+        </article>
       </div>
     </section>
 
-    <div class="footer">
-      © <span id="y"></span> Johnson To • Built on GitHub Pages
-    </div>
+    <section class="section">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Recent experience</h2>
+          <a class="text-link" href="experience.html">Full experience</a>
+        </div>
+        <div class="feature">
+          <div>
+            <h3>Research &amp; Development Engineering Intern</h3>
+            <p class="org">Delphon Industries, Hayward, CA &nbsp;|&nbsp; June to August 2026</p>
+            <p>Tuned cure concentration in high-temperature silicone ESD films to reach 10<sup>7</sup> &Omega;/sq surface resistivity, made 50+ thin-film drawdowns, and wrote a Python workflow to analyze Zygo profilometry data from 40 samples.</p>
+          </div>
+          <a class="btn" href="experience.html">View experience</a>
+        </div>
+      </div>
+    </section>
   </main>
 
+  <footer class="site-foot" id="contact">
+    <div class="wrap">
+      <h2>Get in touch</h2>
+      <p>I'm open to internship and research opportunities in chemical engineering. Email is the best way to reach me.</p>
+      <div class="actions">
+        <a class="btn solid" href="mailto:johnson07@berkeley.edu">johnson07@berkeley.edu</a>
+        <a class="btn" href="https://www.linkedin.com/in/johnsonto7/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+      </div>
+      <p class="fine">&copy; <span id="y">2026</span> Johnson To</p>
+    </div>
+  </footer>
+
   <script src="assets/js/main.js"></script>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>

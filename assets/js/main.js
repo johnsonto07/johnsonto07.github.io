@@ -1,38 +1,35 @@
 (function () {
-  const root = document.documentElement;
-  const toggleBtn = document.querySelector('[data-theme-toggle]');
+  var root = document.documentElement;
+  var btn = document.querySelector('[data-theme-toggle]');
+  var sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+  var moon = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>';
 
-  // Load saved theme
-  const saved = localStorage.getItem('theme');
-  if (saved === 'dark' || saved === 'light') {
-    root.setAttribute('data-theme', saved);
+  function isDark() {
+    var t = root.getAttribute('data-theme');
+    if (t) return t === 'dark';
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
   }
-
-  // Set active nav link based on current file
-  const path = window.location.pathname.split('/').pop() || 'index.html';
-  document.querySelectorAll('.nav-links a').forEach(a => {
-    const href = a.getAttribute('href');
-    if (href === path) a.classList.add('active');
-  });
-
-  // Toggle theme
-  function setTheme(next) {
-    root.setAttribute('data-theme', next);
-    localStorage.setItem('theme', next);
-    if (toggleBtn) {
-      toggleBtn.setAttribute('aria-label', next === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
-      toggleBtn.innerText = next === 'dark' ? '☀️' : '🌙';
-    }
+  function paint() {
+    if (!btn) return;
+    var dark = isDark();
+    btn.innerHTML = dark ? sun : moon;
+    btn.setAttribute('aria-label', dark ? 'Switch to light mode' : 'Switch to dark mode');
   }
-
-  if (toggleBtn) {
-    // Initialize icon based on current theme
-    const current = root.getAttribute('data-theme') || 'light';
-    toggleBtn.innerText = current === 'dark' ? '☀️' : '🌙';
-
-    toggleBtn.addEventListener('click', () => {
-      const now = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-      setTheme(now);
+  if (btn) {
+    paint();
+    btn.addEventListener('click', function () {
+      var next = isDark() ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      paint();
     });
   }
+
+  var page = window.location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-links a').forEach(function (a) {
+    if (a.getAttribute('href') === page) a.setAttribute('aria-current', 'page');
+  });
+
+  var y = document.getElementById('y');
+  if (y) y.textContent = new Date().getFullYear();
 })();

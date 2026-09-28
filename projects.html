@@ -1,103 +1,123 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Projects • Johnson To</title>
-  <link rel="stylesheet" href="assets/css/style.css" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects | Johnson To</title>
+  <meta name="description" content="Engineering and chemistry projects by Johnson To, a chemical engineering student at UC Berkeley.">
+  <meta property="og:title" content="Projects | Johnson To">
+  <meta property="og:description" content="Engineering and chemistry projects by Johnson To, a chemical engineering student at UC Berkeley.">
+  <meta property="og:image" content="https://johnsonto07.github.io/assets/img/headshot.jpg">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6b4f'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='700' text-anchor='middle' fill='white'%3EJT%3C/text%3E%3C/svg%3E">
+  <script>try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
-  <div class="nav">
-    <div class="container nav-inner">
+  <header class="site-nav">
+    <div class="wrap">
       <a class="brand" href="index.html">Johnson To</a>
-
-      <div class="nav-links">
+      <nav class="nav-links" aria-label="Main">
         <a href="index.html">Home</a>
-        <a href="about.html">About</a>
         <a href="projects.html">Projects</a>
         <a href="experience.html">Experience</a>
-        <a href="photos.html">Photos</a>
-        <a href="contact.html">Contact</a>
-      </div>
-
-      <div class="nav-actions">
-        <button class="icon-btn" data-theme-toggle aria-label="Switch to dark mode">🌙</button>
-      </div>
+        <a href="about.html">About</a>
+        <a href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank" rel="noopener">Resume</a>
+        <button class="theme-btn" type="button" data-theme-toggle aria-label="Switch theme"></button>
+      </nav>
     </div>
-  </div>
+  </header>
 
-  <main class="container">
-    <section class="section" style="margin-top:18px">
-      <h2>Projects</h2>
-      <p class="kicker">Coming soon — I’ll post my work here as I build it.</p>
-
-      <div class="grid" style="margin-top:14px">
-
-        <div class="card">
-          <h3>Technical Lab Report</h3>
-          <p>Formal lab report written in LaTeX, including analysis, equations, and experimental results.</p>
-
-          <div class="tags">
-            <span class="tag">LaTeX</span>
-            <span class="tag">Technical Writing</span>
-            <span class="tag">Chemistry</span>
-          </div>
-
-          <div class="cta-row" style="margin-top:12px">
-            <!-- IMPORTANT: if you rename your PDF later, update this link -->
-            <a class="btn primary"
-               href="assets/reports/Experiment_9_Formal_Lab_Report_Correct%20(2).pdf"
-               target="_blank"
-               rel="noreferrer">
-              View PDF
-            </a>
-          </div>
-        </div>
-
-        <div class="card">
-          <h3>Hydrogen Electrolysis Experiment and Analysis</h3>
-          <p>A project analyzing hydrogen production efficiency under different voltages and currents, with data visualization and optimization insights.</p>
-          <div class="tags">
-            <span class="tag">Experimental Design</span>
-            <span class="tag">Data Analysis</span>
-            <span class="tag">Energy</span>
-          </div>
-
-          <div class="cta-row" style="margin-top:12px">
-            <a class="btn primary" href="https://johnsonto07.github.io/hydrogen-electrolyzer-analysis" target="_blank">
-              View Site
-            </a>
-          </div>
-        </div>
-
-        <div class="card">
-  <h3>Smart Trash Sorting System</h3>
-  <p>
-    Developed a smart trash can that uses computer vision to identify and sort waste in real time, integrating hardware design with machine learning to improve recycling accuracy and efficiency.
-  </p>
-
-  <div class="tags">
-    <span class="tag">Computer Vision</span>
-    <span class="tag">Machine Learning</span>
-    <span class="tag">Hardware</span>
-    <span class="tag">Sustainability</span>
-  </div>
-
-  <div class="cta-row" style="margin-top:12px">
-    <a class="btn primary" href="https://johnsonto07.github.io/smart-trash-can-project/" target="_blank">
-      View Site
-    </a>
-  </div>
-</div>
+  <main>
+    <section class="page-head">
+      <div class="wrap">
+        <h1>Projects</h1>
+        <p>Lab work, builds, and analysis from school and on my own time.</p>
       </div>
     </section>
 
-    <div class="footer">
-      © <span id="y"></span> Johnson To
-    </div>
+    <section class="section">
+      <div class="wrap">
+        <article class="project">
+          <div class="project-media "><img src="assets/img/projects/smart-waste-sorter.jpg" alt="The finished smart waste sorter: a wood and polycarbonate enclosure with two openings" loading="lazy"></div>
+          <div>
+            <h3>Smart Waste Sorting System</h3>
+            <div class="meta">Personal project, January to May 2026</div>
+            <p class="result">Up to 95% confidence classifying trash vs. recycling</p>
+          <ul>
+            <li>Machined wood and polycarbonate parts for a 15&Prime; &times; 30&Prime; &times; 20&Prime; enclosure with a hinge mechanism.</li>
+            <li>Ran a ResNet50 image classifier on a Raspberry Pi through a Flask server.</li>
+            <li>Wired a camera module, servo actuation, and confidence-threshold logic so the bin makes sorting decisions in real time.</li>
+          </ul>
+          <div class="links">
+            <a class="text-link" href="https://johnsonto07.github.io/smart-trash-can-project/" target="_blank" rel="noopener">View project site</a>
+          </div>
+          </div>
+        </article>
+        <article class="project">
+          <div class="project-media contain"><img src="assets/img/projects/hydrogen-efficiency-chart.jpg" alt="Scatter plot of Faradaic efficiency against cell voltage with a linear fit" loading="lazy"></div>
+          <div>
+            <h3>Hydrogen Electrolysis Optimization</h3>
+            <div class="meta">Personal project, January to May 2026</div>
+            <p class="result">Peak Faradaic efficiency of about 90% across 50+ trials</p>
+          <ul>
+            <li>Built an electrolysis cell with graphite electrodes and a sodium bicarbonate electrolyte, run below 30 V.</li>
+            <li>Recorded voltage, current, and gas output for 50+ trials to model hydrogen yield.</li>
+            <li>Compared measured H<sub>2</sub> output with Faraday&rsquo;s law predictions and ran an error analysis to find systematic losses.</li>
+          </ul>
+          <div class="links">
+            <a class="text-link" href="https://johnsonto07.github.io/hydrogen-electrolyzer-analysis/" target="_blank" rel="noopener">View project site</a>
+          </div>
+          </div>
+        </article>
+        <article class="project">
+          <div class="project-media formula"><div class="formula-inner"><div class="f">C<sub>13</sub>H<sub>18</sub>O<sub>2</sub></div><div class="n">Ibuprofen</div></div></div>
+          <div>
+            <h3>Ibuprofen Concentration and Degradation Analysis</h3>
+            <div class="meta">Chemistry lab project, January to May 2026</div>
+            <p class="result">Measured how UV and heat exposure affect ibuprofen content in commercial tablets</p>
+          <ul>
+            <li>Found ibuprofen concentration in tablets by acid-base titration with NaOH (1:1 neutralization).</li>
+            <li>Built a 4-point calibration curve in Python with matplotlib relating NaOH volume to concentration.</li>
+            <li>Ran 10+ titrations across UV-exposed, heat-exposed, and control groups.</li>
+          </ul>
+          </div>
+        </article>
+        <article class="project">
+          <div class="project-media "><img src="assets/img/projects/weak-acid-report.jpg" alt="First page of the formal lab report on identifying an unknown weak acid" loading="lazy"></div>
+          <div>
+            <h3>Identifying an Unknown Weak Acid</h3>
+            <div class="meta">Formal lab report, written in LaTeX</div>
+            <p class="result">Identified the unknown as mandelic acid from its molar mass and pK<sub>a</sub></p>
+          <ul>
+            <li>Standardized NaOH against potassium hydrogen phthalate to 0.1065 &plusmn; 0.0011 M.</li>
+            <li>Located equivalence points with the derivative method and Gran plots; trials agreed within 0.5%.</li>
+            <li>Calculated a molar mass of 147 &plusmn; 8 g/mol and a pK<sub>a</sub> of 3.50 &plusmn; 0.06.</li>
+          </ul>
+          <div class="links">
+            <a class="text-link" href="assets/reports/weak-acid-titration-report.pdf" target="_blank" rel="noopener">Read the report (PDF)</a>
+          </div>
+          </div>
+        </article>
+      </div>
+    </section>
   </main>
 
+  <footer class="site-foot" id="contact">
+    <div class="wrap">
+      <h2>Get in touch</h2>
+      <p>I'm open to internship and research opportunities in chemical engineering. Email is the best way to reach me.</p>
+      <div class="actions">
+        <a class="btn solid" href="mailto:johnson07@berkeley.edu">johnson07@berkeley.edu</a>
+        <a class="btn" href="https://www.linkedin.com/in/johnsonto7/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="assets/resume/Johnson_To_Resume_2026.pdf" target="_blank" rel="noopener">Resume (PDF)</a>
+      </div>
+      <p class="fine">&copy; <span id="y">2026</span> Johnson To</p>
+    </div>
+  </footer>
+
   <script src="assets/js/main.js"></script>
-  <script>document.getElementById('y').textContent = new Date().getFullYear();</script>
 </body>
 </html>
