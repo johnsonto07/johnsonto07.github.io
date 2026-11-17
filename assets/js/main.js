@@ -3,6 +3,7 @@
   // The <head> script hides not-yet-revealed elements (html.js). This flag
   // tells it this file loaded and will reveal them, so it leaves .js in place.
   window.siteReady = true;
+
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var btn = document.querySelector('[data-theme-toggle]');
   var sun = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
@@ -75,6 +76,13 @@
     real.forEach(function (el) { track.appendChild(clone(el)); });
     real.slice().reverse().forEach(function (el) { track.insertBefore(clone(el), track.firstChild); });
 
+    // A copy of the page cached before the wheel existed has no clipping window.
+    if (!c.querySelector('.wheel')) {
+      var box = document.createElement('div');
+      box.className = 'wheel';
+      track.parentNode.insertBefore(box, track);
+      box.appendChild(track);
+    }
     track.removeAttribute('tabindex');   // the arrows and arrow keys replace native scrolling
     c.classList.add('is-wheel');
 
@@ -85,7 +93,7 @@
     var tween = null;    // a glide started by an arrow, a key, or keyboard focus
     var drag = null;     // pointer currently holding the wheel
     var swallowClick = false;
-    var hover = false, focused = false, holdUntil = 0;
+    var focused = false, holdUntil = 0, aimUntil = 0, aimTimer = 0;
     var visible = !('IntersectionObserver' in window);   // set by the observer below
     var raf = 0, last = 0;
 
@@ -109,7 +117,8 @@
 
     // The wheel drifts on its own unless something is holding it still.
     function cruising() {
-      return !reduce && visible && !document.hidden && !hover && !focused && !drag && performance.now() >= holdUntil;
+      var now = performance.now();
+      return !reduce && visible && !document.hidden && !focused && !drag && now >= holdUntil && now >= aimUntil;
     }
     function hold(ms) { holdUntil = performance.now() + ms; setTimeout(kick, ms + 30); }
     function kick() { if (!raf) { last = performance.now(); raf = requestAnimationFrame(frame); } }
@@ -128,7 +137,7 @@
       } else if (!(drag && drag.moved)) {
         // Speed eases toward the resting drift (or toward a stop), which also
         // gives a flick its slow-down.
-        var want = cruising() ? stepW / 14 : 0;
+        var want = cruising() ? stepW / 9.3 : 0;   // one card passes about every 9 seconds
         vel += (want - vel) * (1 - Math.exp(-3 * dt));
         if (Math.abs(want - vel) < 0.3) vel = want;
         pos = wrap(pos + vel * dt);
@@ -215,9 +224,25 @@
       kick();
     }, { passive: false });
 
-    // Hold still under the mouse and while a link inside has keyboard focus.
-    c.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
-    c.addEventListener('pointerleave', function (e) { if (e.pointerType === 'mouse') { hover = false; kick(); } });
+    // Hold still while the mouse is moving over the wheel, since someone is
+    // probably aiming at a link. A cursor that is only resting there does not
+    // stop it; otherwise the wheel would look frozen whenever the page was
+    // scrolled with the cursor in the middle of the screen.
+    var mx = null, my = null;
+    c.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var moved = mx !== null && (e.screenX !== mx || e.screenY !== my);
+      mx = e.screenX; my = e.screenY;
+      if (!moved) return;
+      aimUntil = performance.now() + 2500;
+      clearTimeout(aimTimer);
+      aimTimer = setTimeout(kick, 2530);
+    });
+    c.addEventListener('pointerleave', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      mx = my = null; aimUntil = 0; clearTimeout(aimTimer); kick();
+    });
+    // Also hold while a link inside has keyboard focus.
     c.addEventListener('focusin', function (e) {
       var keyboard = true;
       try { keyboard = e.target.matches(':focus-visible'); } catch (err) {}
@@ -236,6 +261,7 @@
       new IntersectionObserver(function (en) { visible = en[0].isIntersecting; if (visible) kick(); }).observe(c);
     }
     document.addEventListener('visibilitychange', kick);
+    window.addEventListener('pageshow', kick);
     window.addEventListener('resize', function () { tween = null; measure(); render(!vel); });
     // Older browsers clip with overflow:hidden, which can still be scrolled by focus.
     var win = c.querySelector('.wheel');
@@ -246,39 +272,91 @@
     kick();
   });
 
+  // Greeting screen on the home page ("Hey, I'm Johnson."). The <head> script
+  // adds .greet when someone arrives at the site or reloads the home page, and
+  // CSS runs the whole sequence. This part starts the page entrance as the
+  // curtain lifts, lets any click, key or scroll skip the greeting, and holds
+  // back the scroll reveals until the page is actually visible.
+  var greeting = document.querySelector('.greeting');
+  var introAt = 0;        // when the page entrance last started (ms since load)
+  var waiting = [];       // things to run once the greeting is out of the way
+  function afterGreeting(fn) { if (waiting) waiting.push(fn); else fn(); }
+
+  (function () {
+    var skipOn = ['pointerdown', 'keydown', 'wheel', 'touchmove'];
+    var done = false;
+    function finish(skipped) {
+      if (done) return;
+      done = true;
+      skipOn.forEach(function (t) { window.removeEventListener(t, skip, true); });
+      if (skipped === true) root.classList.add('greet-skip');
+      else if (root.classList.contains('greet')) root.classList.add('after-greeting');
+      introAt = performance.now();
+      root.classList.add('play-intro');
+      // take the curtain away once it has finished lifting or fading
+      setTimeout(function () { root.classList.remove('greet', 'greet-skip'); }, skipped === true ? 350 : 950);
+      var run = waiting;
+      waiting = null;
+      run.forEach(function (fn) { fn(); });
+    }
+    function skip() { finish(true); }
+
+    if (!root.classList.contains('greet') || !greeting || reduce) {
+      // No greeting this time: make sure nothing is left waiting on it.
+      if (root.classList.contains('greet')) { root.classList.remove('greet'); root.classList.add('play-intro'); }
+      var run = waiting;
+      waiting = null;
+      run.forEach(function (fn) { fn(); });
+      return;
+    }
+    skipOn.forEach(function (t) { window.addEventListener(t, skip, { capture: true, passive: true }); });
+    // Start the entrance at the moment the curtain begins to lift.
+    greeting.addEventListener('animationstart', function (e) {
+      if (e.target === greeting && e.animationName === 'curtain') finish();
+    });
+    var lifting = greeting.getAnimations && greeting.getAnimations().some(function (a) {
+      return a.animationName === 'curtain' && a.currentTime >= 2000;
+    });
+    if (lifting) finish();
+    setTimeout(finish, 3500);   // safety net if the event never arrives
+  })();
+
   // Scroll reveals. The CSS hides [data-reveal] elements until they get .is-in.
   // Elements inside a [data-reveal-group] (the carousel) are revealed together
-  // when the group arrives, so looping cards never show up half-revealed.
+  // when the group arrives, so looping cards never show up half-revealed. A
+  // group marked "replay" hides again once it is fully off screen, so its
+  // entrance plays every time it comes back into view.
   // This runs after the carousel has made its clones so they are included.
   var slice = Array.prototype.slice;
   var revealEls = slice.call(document.querySelectorAll('[data-reveal]'));
   var groups = slice.call(document.querySelectorAll('[data-reveal-group]'));
   var plots = slice.call(document.querySelectorAll('.titration'));
+  var replayAll = null;   // set below; lets a restored page play everything again
 
   function show(el, delay) {
     if (delay) el.style.setProperty('--d', delay + 'ms');
     el.classList.add('is-in');
   }
-  function drawPlot(svg, io) {
-    var c = svg.closest('[data-carousel]');
-    (c ? slice.call(c.querySelectorAll('.titration')) : [svg]).forEach(function (s) {
-      s.classList.add('is-drawn');
-      if (io) io.unobserve(s);
-    });
+  function hide(el) {
+    el.classList.remove('is-in');
+    el.style.removeProperty('--d');
   }
 
   if (reduce || !('IntersectionObserver' in window)) {
     revealEls.forEach(function (el) { show(el, 0); });
-    plots.forEach(function (s) { drawPlot(s); });
+    plots.forEach(function (s) { s.classList.add('is-drawn'); });
   } else {
     var io = new IntersectionObserver(function (entries) {
       // Let the page entrance get going before anything else starts.
-      var base = root.classList.contains('play-intro') && performance.now() < 1500 ? 450 : 0;
+      var base = performance.now() - introAt < 1500 ? 450 : 0;
       var n = 0;
       entries.forEach(function (e) {
         var el = e.target;
+        var replay = el.getAttribute('data-reveal-group') === 'replay';
         var above = !e.isIntersecting && e.boundingClientRect.bottom <= 0;
-        if (!e.isIntersecting && !above) return;
+        // Things already scrolled past are shown at once. A replay group
+        // waits instead, so it can play when it is scrolled back to.
+        if (!e.isIntersecting && (!above || replay)) return;
         io.unobserve(el);
         if (el.hasAttribute('data-reveal-group')) {
           var k = 0;
@@ -287,24 +365,70 @@
             var onScreen = !above && r.right > 0 && r.left < window.innerWidth;
             show(child, onScreen ? base + k++ * 110 : 0);
           });
+          if (replay) away.observe(el);
         } else {
           show(el, above ? 0 : base + n++ * 120);
         }
       });
     }, { rootMargin: '0px 0px -10% 0px' });
-    revealEls.forEach(function (el) { if (!el.closest('[data-reveal-group]')) io.observe(el); });
-    groups.forEach(function (g) { io.observe(g); });
 
-    // Plot the titration curve the first time most of the chart is on screen.
-    // In the carousel it waits until nearly all of it has come round.
+    var away = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) return;
+        away.unobserve(e.target);
+        slice.call(e.target.querySelectorAll('[data-reveal]')).forEach(hide);
+        io.observe(e.target);
+      });
+    });
+
+    // Titration curve. On the projects page it plots once, when most of the
+    // chart is on screen. In the carousel it waits until nearly all of the
+    // chart has come round, and it clears again while no copy of the chart is
+    // visible, so it plots afresh on every turn of the wheel.
+    var seen = [];   // carousel charts currently on screen
     var plotIO = new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        var need = e.target.closest('[data-carousel]') ? 0.85 : 0.55;
-        if (e.intersectionRatio >= need) drawPlot(e.target, plotIO);
+        var svg = e.target, wheel = svg.closest('[data-carousel]');
+        if (!wheel) {
+          if (e.intersectionRatio >= 0.55) { svg.classList.add('is-drawn'); plotIO.unobserve(svg); }
+          return;
+        }
+        var i = seen.indexOf(svg);
+        if (e.isIntersecting && i < 0) seen.push(svg);
+        if (!e.isIntersecting && i >= 0) seen.splice(i, 1);
+        var copies = slice.call(wheel.querySelectorAll('.titration'));
+        if (e.intersectionRatio >= 0.85) copies.forEach(function (s) { s.classList.add('is-drawn'); });
+        else if (!copies.some(function (s) { return seen.indexOf(s) >= 0; })) copies.forEach(function (s) { s.classList.remove('is-drawn'); });
       });
-    }, { threshold: [0.55, 0.85] });
-    plots.forEach(function (s) { plotIO.observe(s); });
+    }, { threshold: [0, 0.55, 0.85] });
+
+    var watch = function () {
+      revealEls.forEach(function (el) { if (!el.closest('[data-reveal-group]')) io.observe(el); });
+      groups.forEach(function (g) { io.observe(g); });
+      plots.forEach(function (s) { plotIO.observe(s); });
+    };
+    afterGreeting(watch);
+
+    replayAll = function () {
+      [io, away, plotIO].forEach(function (o) { o.disconnect(); });
+      seen.length = 0;
+      revealEls.forEach(hide);
+      plots.forEach(function (s) { s.classList.remove('is-drawn'); });
+      watch();
+    };
   }
+
+  // The back and forward buttons can restore a page exactly as it was left,
+  // with nothing moving. Play the entrance and the reveals again in that case
+  // so every arrival at a page looks the same.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted || reduce) return;
+    root.classList.remove('play-intro', 'after-greeting');
+    void root.offsetWidth;
+    introAt = performance.now();
+    root.classList.add('play-intro');
+    if (replayAll) replayAll();
+  });
 
   var y = document.getElementById('y');
   if (y) y.textContent = new Date().getFullYear();

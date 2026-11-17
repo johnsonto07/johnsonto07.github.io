@@ -292,13 +292,20 @@ p{margin:0 0 1em}
    One entrance per page, photos that fill in from the bottom edge as they
    scroll into view, and a titration curve that plots itself.
    Hidden starting states only apply while <html> has the .js class. The
-   inline script in <head> adds it, and takes it away again if main.js has
-   not run after 3 s, so content can never stay invisible.
+   inline script in <head> adds it, and it is taken away again if main.js
+   fails to load or has not run after 6 s, so content can never stay invisible.
    All of it is skipped in print and for visitors who ask for reduced motion. */
 
 :root{--ease:cubic-bezier(.2,.7,.2,1)}
 
 .rise,.rise > span{display:inline-block}
+
+/* Greeting screen: hidden unless the motion rules below switch it on */
+.greeting{display:none}
+.greeting p{
+  margin:0;font-family:var(--display);font-weight:800;
+  font-size:clamp(44px, 12.5vw, 128px);line-height:1;letter-spacing:-.035em;
+}
 
 @keyframes rise{from{transform:translateY(125%)}}
 @keyframes settle{from{opacity:0;transform:translateY(14px)}}
@@ -307,22 +314,46 @@ p{margin:0 0 1em}
 @keyframes ease-back{from{transform:scale(1.08)}}
 @keyframes bar{from{background-size:3px 0}}
 @keyframes turn{from{transform:rotate(-80deg) scale(.5);opacity:0}}
+@keyframes curtain{from{clip-path:inset(0)}to{clip-path:inset(0 0 100% 0);visibility:hidden}}
+@keyframes lift{to{transform:translateY(-22vh)}}
+@keyframes gone{to{opacity:0;visibility:hidden}}
 
 @media screen and (prefers-reduced-motion: no-preference){
 
-  /* Page entrance. Plays on a fresh visit or a reload, not on in-site clicks
-     (the <head> script decides and sets .play-intro). */
+  /* Page entrance. Plays every time a page is opened: the <head> script sets
+     .play-intro, and main.js re-adds it to replay the entrance when the back
+     or forward button restores a page from the browser's cache. */
   .play-intro .rise{clip-path:inset(-.25em -.12em -.24em -.12em)}
-  .play-intro .rise > span{animation:rise .95s var(--ease) backwards}
-  .play-intro .rise + .rise > span{animation-delay:.08s}
+  .play-intro .rise > span{animation:rise .95s var(--ease) var(--t0, 0s) backwards}
+  .play-intro .rise + .rise > span{animation-delay:calc(var(--t0, 0s) + .08s)}
   .play-intro :is(.hero .wrap > div:first-child, .page-head .wrap) > :not(h1){
-    animation:settle .7s var(--ease) calc(.22s + var(--n, 1) * .09s) backwards;
+    animation:settle .7s var(--ease) calc(var(--t0, 0s) + .22s + var(--n, 1) * .09s) backwards;
   }
   :is(.hero .wrap > div:first-child, .page-head .wrap) > :nth-child(3){--n:2}
   :is(.hero .wrap > div:first-child, .page-head .wrap) > :nth-child(4){--n:3}
   :is(.hero .wrap > div:first-child, .page-head .wrap) > :nth-child(5){--n:4}
-  .play-intro .portrait{animation:fill 1.05s var(--ease) .18s backwards}
-  .play-intro .portrait img{animation:ease-back 1.6s var(--ease) .18s backwards}
+  .play-intro .portrait{animation:fill 1.05s var(--ease) calc(var(--t0, 0s) + .18s) backwards}
+  .play-intro .portrait img{animation:ease-back 1.6s var(--ease) calc(var(--t0, 0s) + .18s) backwards}
+
+  /* Greeting. On arriving at the home page a pine screen says hello, then
+     lifts like a curtain and the entrance above plays. The <head> script
+     decides when to show it (.greet). The whole sequence is timed in CSS, so
+     the curtain lifts even if main.js never loads; main.js only starts the
+     entrance at the right moment and lets a click, key or scroll skip it. */
+  .greet .greeting{
+    display:flex;align-items:center;
+    position:fixed;inset:0;z-index:100;
+    background:#245a41;color:#fff;
+    animation:curtain .8s cubic-bezier(.7,0,.2,1) 2s forwards;
+  }
+  .greet .greeting p{animation:lift .8s cubic-bezier(.7,0,.2,1) 2s forwards}
+  .greet .greeting p .rise{clip-path:inset(-.25em -.12em -.24em -.12em)}
+  .greet .greeting p .rise > span{animation:rise .85s var(--ease) .15s backwards}
+  .greet .greeting p .rise:nth-of-type(2) > span{animation-delay:.6s}
+  .greet .greeting p .rise:nth-of-type(3) > span{animation-delay:.68s}
+  .greet-skip .greeting,
+  .greet-skip .greeting p{animation:gone .3s ease forwards}
+  .after-greeting{--t0:.4s}   /* the entrance waits for the curtain to clear the heading */
 
   /* Scroll reveals. main.js adds .is-in when an element comes into view and
      sets --d to stagger elements that arrive together. */

@@ -9,9 +9,9 @@
   <meta property="og:description" content="Engineering and chemistry projects by Johnson To, a chemical engineering student at UC Berkeley.">
   <meta property="og:image" content="https://johnsonto.com/assets/img/headshot.jpg">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232f6b4f'/%3E%3Ctext x='32' y='44' font-family='Arial,sans-serif' font-size='34' font-weight='700' text-anchor='middle' fill='white'%3EJT%3C/text%3E%3C/svg%3E">
-  <script>(function(d){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')d.setAttribute('data-theme',t)}catch(e){}d.classList.add('js');try{var n=performance.getEntriesByType('navigation')[0];if(!n||n.type==='reload'||(n.type==='navigate'&&document.referrer.indexOf(location.origin+'/')!==0))d.classList.add('play-intro')}catch(e){}setTimeout(function(){if(!window.siteReady)d.classList.remove('js')},3000)})(document.documentElement)</script>
+  <script>(function(d){try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')d.setAttribute('data-theme',t)}catch(e){}d.classList.add('js','play-intro');setTimeout(function(){if(!window.siteReady)d.classList.remove('js')},6000)})(document.documentElement)</script>
   <link rel="preload" href="assets/fonts/manrope-latin-800-normal.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="assets/css/style.css?v=20261116">
+  <link rel="stylesheet" href="assets/css/style.css?v=20261116b">
 </head>
 <body>
   <header class="site-nav">
@@ -129,6 +129,6 @@
     </div>
   </footer>
 
-  <script src="assets/js/main.js?v=20261116"></script>
+  <script src="assets/js/main.js?v=20261116b" onerror="document.documentElement.classList.remove('js')"></script>
 </body>
 </html>
