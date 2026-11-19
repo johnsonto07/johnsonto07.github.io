@@ -418,3 +418,16 @@ p{margin:0 0 1em}
 html.theme-swap::view-transition-old(root),
 html.theme-swap::view-transition-new(root){animation:none;mix-blend-mode:normal}
 html.theme-swap *{transition:none !important}
+
+/* Photos page: photos flow into columns at their own shapes, so any number
+   and any mix of tall and wide photos fits */
+.gallery{columns:3;column-gap:16px}
+.shot{margin:0 0 18px;break-inside:avoid}
+.shot .frame{overflow:hidden;border-radius:10px;background:var(--line, #e5e9e6)}
+.shot img{width:100%;height:auto;display:block}
+.shot figcaption{margin-top:7px;font-size:13.5px;line-height:1.35;color:var(--muted)}
+.shot-wide{margin-bottom:16px}   /* a full-width landscape above the gallery */
+.more-photos{margin-top:32px;padding-top:32px;border-top:1px solid var(--line, #dfe5e1);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
+.more-photos p{margin:0;max-width:52ch}
+@media (max-width:900px){.gallery{columns:2}}
+@media (max-width:560px){.gallery{columns:1}}
